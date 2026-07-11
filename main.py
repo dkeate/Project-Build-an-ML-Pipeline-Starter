@@ -128,12 +128,18 @@ def go(config: DictConfig):
             )
 
         if "test_regression_model" in active_steps:
-
-            ##################
-            # Implement here #
-            ##################
-
-            pass
+            _ = mlflow.run(
+                os.path.join(
+                    hydra.utils.get_original_cwd(),
+                    "components",
+                    "test_regression_model"
+                ),
+                "main",
+                parameters={
+                    "mlflow_model": config["m_params"]["test_regression_model"]["mlflow_model"],
+                    "test_dataset": config["m_params"]["test_regression_model"]["test_dataset"]
+                },
+            )
 
 
 if __name__ == "__main__":
